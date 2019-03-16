@@ -1,0 +1,46 @@
+<div class="col-lg-5">
+	<h1 class="h1-strong">{{title}}</h1>
+
+	<!-- Aca mostramos un alert si se logueó correctamente el usuario -->
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		Login Exitoso! Bienvenido {{user.name}}
+	</div>
+
+	<!-- Aca mostramos un alert si falló el login el usuario -->
+	<div class="alert alert-danger" *ngIf="status=='error'">
+		Login Incorrecto, Comprueba tus credenciales!
+	</div>
+
+	<form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="col-md-12">
+
+		<!-- Correo -->
+		<p>
+			<label for="">Correo Electrónico</label>
+			<!-- Utilizamos la directiva ngModel para hacer el two way data binding -->
+			<input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+			<span *ngIf="!email.valid && email.touched">
+				El email no es correcto
+			</span>
+		</p>
+
+		<!-- Contraseña -->
+		<p>
+			<label for="">Contraseña</label>
+			<!-- Utilizamos la directiva ngModel para hacer el two way data binding -->
+			<input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" required>
+			<span *ngIf="!password.valid && password.touched">
+				La contraseña es obligatoria
+			</span>
+		</p>
+
+		<!-- Submit -->
+		<!-- Atrinuto disabled si no es valido el formulario -->
+		<input type="submit" value="Entrar" class="btn btn-success" [disabled]="!loginForm.form.valid">
+
+	</form>
+
+
+
+</div>
+
+

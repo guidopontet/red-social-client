@@ -1,0 +1,106 @@
+<div class="col-md-4 sidebar-32">
+	<h1 class="h1-strong">Hola {{identity.name}}!</h1>
+</div>
+
+<div id="user-card" class="col-md-4 panel panel-info pull-left">
+	
+	<!-- AVATAR -->
+	<div class="avatar pull-left">
+		<img class="img-responsive center-block" src="{{url+'get-image-user/'+identity.image}}" *ngIf="identity.image">
+		<img class="img-responsive center-block" src="assets/user.png" *ngIf="!identity.image">
+	</div>
+
+	<!-- NOMBRE Y APELLIDO -->
+	<div class="name-surname pull-left">
+		<a [routerLink]="['/perfil/',identity._id]" class="username">
+			{{identity.name+' '+identity.surname}}
+		</a>
+		<!-- NICK -->
+		<p class="nickname">{{identity.nick}}</p>
+
+		<div class="clearfix"></div>
+	</div>
+
+	<!-- CLEARFIX PARA LIMPIAR LOS FLOTADOS -->
+	<div class="clearfix"></div>
+
+	<!-- ESTADISTICAS -->
+	<!-- Comprobamos si existen las estadisticas -->
+	<div class="stats" *ngIf="stats">
+
+		<!-- SIGUIENDO -->
+		<div class="following-data">
+			<a [routerLink]="['/siguiendo',identity._id,1]">
+				<span class="label-stats">
+					Siguiendo
+				</span>
+				<span class="number-stats">
+					{{stats.following}}
+				</span>
+			</a>
+		</div>
+
+		<!-- SEGUIDORES -->
+		<div class="following-data">
+			<a [routerLink]="['/seguidores',identity._id,1]">
+				<span class="label-stats">
+					Seguidores
+				</span>
+				<span class="number-stats">
+					{{stats.followed}}
+				</span>
+			</a>
+		</div>
+
+
+		<!-- PUBLICACIONES -->
+		<div class="following-data">
+			<a [routerLink]="['/perfil/',identity._id]">
+				<span class="label-stats">
+					Publicaciones
+				</span>
+				<span class="number-stats">
+					{{stats.publications}}
+				</span>
+			</a>
+		</div>
+	</div>
+</div>
+
+<!-- FORMULARIO DE PUBLICACIONES -->
+<div id="new-publication" class="col-md-4 pull-left panel panel-info">
+
+	<!-- Mensajes -->
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		Publicacion enviada correctamente
+	</div>
+
+	<div class="alert alert-danger" *ngIf="status=='error'">
+		Publicacion no enviada
+	</div>
+
+	<!-- Formulario -->
+	<!-- Al hacer submit ejecutamos el metodo sendPublication y le pasamos el evento por parametro -->
+	<!-- <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm);sendPublication($event)" class="col-md-10"> -->
+	<!-- Como tardaba en subir la imagen, no la refrescaba correctamente con el sendPublication -->
+	<form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm,$event)" class="col-md-10">
+		<p>
+			<label>¿Qué estás pensando?</label>
+			<textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required></textarea>
+			
+			<!-- Si no es válido mostramos -->
+			<span *ngIf="!text.valid && text.touched">
+				El texto de la Publicación es obligatorio
+			</span>
+		</p>
+
+		<p>
+			<label>Sube tu foto</label>
+			<!-- Al seleccionar la foto lanzamos el evento implementado en el componente -->
+			<input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)">
+		</p>
+
+		<input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPubForm.form.valid">	
+		
+	</form>
+</div>

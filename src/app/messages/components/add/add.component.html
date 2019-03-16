@@ -1,0 +1,41 @@
+<div class="col-md-10">
+	<h3>{{title}}</h3>
+
+	<!-- NOTIFICACION DE MENSAJE EXITOSO O FALLIDO -->
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		Mensaje enviado correctamente. Miralo en tus <a [routerLink]="['/mensajes/enviados']">mensajes enviados</a>
+	</div>
+
+	<!-- Aca mostramos un alert si falló el registro el usuario -->
+	<div class="alert alert-danger" *ngIf="status=='error'">
+		Error al enviar el mensaje, intentelo mas tarde!
+	</div>
+
+	<!-- FORMULARIO DE ENVIO DE MENSAJES -->
+	<form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+		<p>
+			<label>Para:</label>
+			<!-- LISTADO DE SEGUIDORES -->
+			<select *ngIf="follows" name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" class="form-control" required="">
+				<!-- PARA CADA USUARIO QUE ME SIGUE -->
+				<!-- Value el valor que voy a enviar -->
+				<option *ngFor="let follow of follows" value="{{follow.user._id}}">
+					{{follow.user.name + ' ' + follow.user.surname+ ' (' +follow.user.nick+ ')'}}
+				</option>
+			</select>
+		</p>
+
+		<p>
+			<label for="">Mensaje:</label>
+			<textarea name="text" #text="ngModel" [(ngModel)]="message.text" class="form-control" required>
+				
+			</textarea>
+			<!-- Si no rellena podemos mostrar un fallo -->
+			<span *ngIf="!text.valid && text.touched">
+				El mensaje es obligatorio
+			</span>
+		</p>
+
+		<input type="submit" value="{{title}}" class="btn btn-success">
+	</form>
+</div>

@@ -1,0 +1,99 @@
+<div class="col-md-8">
+	<h1 class="h1-strong">{{title}}</h1>
+
+	<!-- Listado de usuarios -->
+
+	<!-- Para cada usuario muestro lo siguiente -->
+	<div class="people">
+
+		<!-- LISTADO -->
+		<div *ngFor="let user of users" class="item-user">
+			<div class="panel panel-info">
+				<div class="panel-body">
+					
+					<!-- IMAGEN DE USUARIO -->
+					<div class="image-user pull-left">
+						<a href="#">
+							<!-- MOSTRAMOS LA IMAGEN SOLAMENTE SI EXISTE -->
+							<img src="{{url+'get-image-user/'+ user.image}}" class="img-responsive center-block" *ngIf="user.image" alt="">
+							<!-- SI NO EXISTE MOSTRAMOS UNA POR DEFECTO -->
+							<img src="assets/user.png" class="img-responsive center-block" *ngIf="!user.image" alt="">
+						</a>
+					</div>
+
+					<!-- NOMBRE Y NICK DE USUARIO -->
+					<div class="user-name pull-left">
+						<p class="">
+							<!-- Enlace al perfil del usuario -->
+							<a [routerLink]="['/perfil/',user._id]" class="name-surname">
+								{{user.name + ' '+user.surname}}
+							</a>
+						</p>
+						<p class="nickname">{{user.nick}}</p>
+					</div>
+
+					<!-- SEGUIR/DEJAR DE SEGUIR -->
+					<!-- A nosotros mismos no no tenemos que mostrar -->
+					<div class="pull-right" *ngIf="user._id!=identity._id">
+
+						<!-- SEGUIR -->
+						<!-- Muestro el boton si no sigo al usuario
+						y llamo al metodo del componente para seguir al usuario -->
+						<button class="btn btn-success" *ngIf="follows.indexOf(user._id) < 0"
+						(click)="followUser(user._id)">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+							Seguir
+						</button>
+
+						<!-- SIGUIENDO -->
+						<!-- Cambio la clase a btn-danger para dejar de seguir -->
+						<button class="btn btn-info" 
+						*ngIf="follows.indexOf(user._id)>0" 
+						(mouseenter)="mouseEnter(user._id)"
+						(mouseleave)="mouseLeave(user._id)"
+						(click)="unFollowUser(user._id)"
+						[class.btn-danger]="user._id==followUserOver">
+							
+							<!-- Si estoy encima del boton ejectuto esto, sinó la plantilla 'following' -->
+							<span *ngIf="user._id==followUserOver;else following">
+								<span class="glyphicon glyphicon-minus-sign"></span>
+								Dejar de Seguir
+							</span>
+
+							<ng-template #following>
+								<span class="glyphicon glyphicon-ok-sign"></span>
+								Siguiendo
+							</ng-template>
+
+						</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<!-- PAGINACION -->
+		<ul class="pagination pull-left">
+			<!-- SI NO ES LA PRIMERA PAGINA -->
+			<li *ngIf="page>1">
+				<a [routerLink]="['/gente',prev_page]">
+					Anterior
+				</a>
+			</li>
+		</ul>
+
+		<ul class="pagination pull-right">
+			<!-- SI NO ES LA ULTIMA PAGINA -->
+			<li *ngIf="pages!=page">
+				<a [routerLink]="['/gente',next_page]">
+					Siguiente
+				</a>
+			</li>
+		</ul>
+
+	</div>
+</div> 
+
+	<!-- CARGAMOS EL COMPONENTE SIDEBAR -->
+	<sidebar></sidebar>
+	<div class="clearfix"></div>

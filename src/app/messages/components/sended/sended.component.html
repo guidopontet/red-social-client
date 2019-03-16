@@ -1,0 +1,76 @@
+<div class="col-md-10">
+	<h3>{{title}}</h3>
+
+	<!-- LISTADO DE MENSAJES ENVIADOS -->
+	<!-- Para cada mensaje muestro lo siguiente -->
+	<div class="people" *ngIf="messages">
+
+		<!-- LISTADO -->
+
+		<div *ngFor="let message of messages" class="item-user">
+			<div class="panel panel-info" *ngIf="message.emmiter">
+				<div class="panel-body">
+					
+					<!-- IMAGEN DE USUARIO -->
+					<div class="image-user pull-left">
+						<a href="#">
+							<!-- MOSTRAMOS LA IMAGEN SOLAMENTE SI EXISTE -->
+							<img src="{{url+'get-image-user/'+ follow.followed.image}}" class="img-responsive center-block" *ngIf="message.emmiter.image" alt="">
+							<!-- SI NO EXISTE MOSTRAMOS UNA POR DEFECTO -->
+							<img src="assets/user.png" class="img-responsive center-block" *ngIf="!message.emmiter.image" alt="">
+						</a>
+					</div>
+
+					<!-- NOMBRE Y NICK DE USUARIO -->
+					<div class="user-name pull-left">
+						<p class="">
+							<!-- Enlace al perfil del usuario -->
+							<a [routerLink]="['/perfil/',message.emmiter._id]" class="name-surname">
+								{{message.emmiter.name + ' '+message.emmiter.surname}}
+							</a>
+							(
+							<span class="nickname">{{message.emmiter.nick}}</span>
+							)
+							&nbsp; | &nbsp;
+							<!-- FECHA (utilizamos pipes de moment) -->
+							<span class="date">
+								{{ (message.created_at | amFromUnix) |amLocale:'es'|amTimeAgo}}
+							</span>
+
+							&nbsp; | &nbsp;
+							<span class="date">
+								Enviado a <a class="name-surname" [routerLink]="['/perfil',message.receiver._id]">{{message.receiver.name + ' '+ message.receiver.surname}}</a>
+							</span>
+						</p>
+
+						<!-- MENSAJE -->
+						<p class="">
+							{{message.text}}
+						</p>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- PAGINACION -->
+		<ul class="pagination pull-left">
+			<!-- SI NO ES LA PRIMERA PAGINA -->
+			<li *ngIf="page>1">
+				<a [routerLink]="['/mensajes/enviados',prev_page]">
+					Anterior
+				</a>
+			</li>
+		</ul>
+
+		<ul class="pagination pull-right">
+			<!-- SI NO ES LA ULTIMA PAGINA -->
+			<li *ngIf="pages!=page">
+				<a [routerLink]="['/mensajes/enviados',next_page]">
+					Siguiente
+				</a>
+			</li>
+		</ul>
+
+	</div>
+</div>

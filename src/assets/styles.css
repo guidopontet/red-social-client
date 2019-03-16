@@ -1,0 +1,262 @@
+/*GENERALES*/
+.h1-strong{
+	font-size: 35px;
+	font-weight: bold;
+	/*margin-left: 13px;*/
+	margin-bottom: 20px;
+	padding-bottom: 14px;
+	border-bottom: 1px solid #eee;
+}
+
+.active{
+	background: #086669 !important;
+}
+
+/*MENU DE CERRAR SESION*/
+.pointer{
+	cursor: pointer;
+}
+
+
+/*HEADER*/
+.navigation{
+	/*Important para que sobreescriba los estilos que trae*/
+	padding: 0px !important;
+}
+
+.navigation .navbar{
+	border-radius: 0px !important;
+	background: #1290A1 !important;
+	border: none;	
+}
+
+/*Todos los elementos del navbar de color blanco*/
+.navigation .navbar *{
+	color: white !important;
+}
+
+/*Color de letras del menu de usuario*/
+.navigation .navbar .dropdown-menu *{
+	color:#2F2D2D !important;
+}
+
+/*Si tienen esta abierto el dropdown, es decir que tiene
+simultaneamente las clases dropdown y open*/
+/*Copiamos el selector inspeccionando desde chrome*/
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus{
+	background: #086669 !important;
+}
+
+/*Hover del Menu de Usuario*/
+.navigation .navbar .dropdown-menu a:hover{
+	background: #eee !important;
+}
+
+.jumbotron{
+	padding: 25px;
+	border-radius: 20px;
+	text-align: center;
+}
+
+/*Imagen de usuario*/
+.navigation .avatar{
+	width: 35px;
+	height: 35px;
+	border-radius: 100px;
+	/*Lo que sobresalga lo oculte*/
+	overflow: hidden;
+	margin-top: 9px;
+	margin-right: 2px;
+}
+
+.navigation .avatar img{
+	height: auto;
+}
+
+/*GENTE*/
+.people{
+	min-height: 300px;
+}
+
+.item-user .image-user,
+.item-publication .image-user{
+	width: 75px;
+	height: 75px;
+	border-radius: 100px;
+	/*Lo que sobresalga lo oculte*/
+	overflow: hidden;
+	margin-right: 15px;
+}
+
+.item-user .image-user img,
+.item-publication .image-user img{
+	width: 100%;
+}
+
+.item-user .image-user .user-name{
+	margin-top: 13px;
+}
+.people .item-user .user-name{
+	color:#666 !important;
+}
+
+.item-user .image-user .nickname{
+	color: #A2A2A2;
+}
+
+.item-user .name-surname,
+.item-publication .name-surname{
+	color:#137B8A !important;
+	font-weight: bold;
+}
+
+/*SIDEBAR*/
+.sidebar-32{
+	width: 32% !important;
+	padding: 0px !important
+
+}
+
+#user-card{
+	padding: 25px;
+	width: 32%;
+}
+
+#new-publication{
+	padding: 18px;	
+	padding-left: 8px !important;
+	width: 32%;
+}
+
+
+#user-card .avatar{
+	width: 75px;
+	height: 75px;
+	border-radius: 100px;
+	/*Lo que sobresalga lo oculte*/
+	overflow: hidden;
+	margin-right: 15px;
+}
+
+#user-card .avatar img{
+	width: 100%
+}
+
+#user-card .name-surname{
+	font-weight: 300;
+	font-size: 17px;
+}
+
+#user-card .name-surname a{
+	color: #555
+}
+
+.name-surname .nickname{
+	color: #777
+}
+
+#user-card .stats{
+	border-top: 1px solid #eee;
+	margin-top: 10px;
+}
+
+#user-card .stats a{
+	text-decoration: none;
+}
+
+/*Para que se muestren debajo*/
+#user-card .label-stats,
+#user-card .number-stats{
+	display: block;
+	text-align: center;
+}
+.following-data .label-stats{
+	font-weight: bold;
+	color: #555 ;
+}
+
+.following-data .number-stats{
+	font-weight: bold;
+	color: #2ED5E9 ;
+}
+
+#user-card .following-data{
+	float: left;
+	padding-left: 18px;
+	padding-right: 18px;
+	margin-top: 10px;
+	border-right: 2px solid #1290A1
+}
+
+/*ELiminamos el ultimo margen de las publicaciones*/
+#user-card .following-data:last-child{
+	border:none;
+}
+
+#user-card .following-data:first-child{
+	padding-left: 6px;
+}
+
+
+/*TIMELINE*/
+#publications{
+	min-height: 500px;
+}
+
+#publications .date{
+	color:#9C9898;
+}
+
+/*PERFIL*/
+#data-profile{
+	min-height: 250px;
+	text-align: left;
+}
+
+#data-profile .avatar{
+	width: 185px;
+	height: 185px;
+	border-radius: 400px;
+	/*Lo que sobresalga lo oculte*/
+	overflow: hidden;
+	margin-right: 15px;
+	margin: 0px auto;
+}
+
+#data-profile .avatar img{
+	width: 100%;
+}
+
+#data-profile .user-name .name{
+	font-size: 24px;
+	font-weight: bold;
+	color: #555;
+}
+
+#data-profile .user-name .nick{
+	font-size: 24px;
+	font-weight: normal;
+	color: grey;
+}
+
+#data-profile .user-name{
+	padding-left: 10px;
+	padding-top: 15px;
+}
+
+#data-profile .user-name .label{
+	margin-bottom: 10px;
+}
+
+#data-profile .stats{
+	border-left: 4px solid #ccc;
+	margin-left: 20px;
+	padding-left: 10px;
+	height: 180px;
+}
+
+#data-profile .stats a{
+	font-size: 16px;
+	line-height: 45px;
+
+}

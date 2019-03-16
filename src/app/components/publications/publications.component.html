@@ -1,0 +1,61 @@
+<!-- Para cada publicacion la mostramos -->
+<div id="publications">
+	<div class="item-publication" *ngFor="let publication of publications">
+		<!-- Declaramos un panel -->
+		<div class="panel panel-warning">
+			<div class="panel-body">
+
+				<!-- IMAGEN DE USUARIO -->
+				<div class="image-user pull-left">
+					<a href="#">
+						<!-- MOSTRAMOS LA IMAGEN SOLAMENTE SI EXISTE -->
+						<img src="{{url+'get-image-user/'+ publication.user.image}}" class="img-responsive center-block" *ngIf="publication.user.image" alt="">
+						<!-- SI NO EXISTE MOSTRAMOS UNA POR DEFECTO -->
+						<img src="assets/user.png" class="img-responsive center-block" *ngIf="!publication.user.image" alt="">
+					</a>
+				</div>
+
+				<div class="">
+					<span class="user-name">
+						{{publication.user.name+' '+publication.user.surname}}
+					</span>
+					&nbsp; | &nbsp;
+					<!-- FECHA (utilizamos pipes de moment) -->
+					<span class="date">
+						{{ (publication.created_at | amFromUnix) |amLocale:'es'|amTimeAgo}}
+					</span>
+				</div>
+
+				<h4 class="publication-text pull-left">
+					{{publication.text}}
+				</h4>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<!-- VER MAS -->
+	<!-- Si tiene publicaciones -->
+	<div class="col-lg-12 text-center" *ngIf="publications && publications.length>0">
+		<p>
+			<!-- Se va a mostrar si hay mas publicaciones -->
+			<button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+				Ver más publicaciones
+			</button>
+
+			<button class="btn btn-danger" *ngIf="noMore">
+				No hay más publicaciones
+			</button>
+		</p>
+	</div>
+
+	<!-- Si no tiene publicaciones -->
+	<div class="col-lg-12 text-center" *ngIf="publications && publications.length<=0">
+		<p>
+			<button class="btn btn-warning">
+				Este usuario no tiene publicaciones
+			</button>
+		</p>
+	</div>
+</div>

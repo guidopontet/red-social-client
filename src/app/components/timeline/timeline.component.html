@@ -1,0 +1,124 @@
+<div class="col-md-8">
+	<h1 class="h1-strong">
+		{{title}}
+		<!-- Boton refrescar -->
+		<button class="btn btn-success btn-sm" (click)="refreshPublications($event)">
+			<span class="glyphicon glyphicon-refresh"></span>
+			Mostrar nuevas
+		</button>
+	</h1>
+
+	<!-- Para cada publicacion la mostramos -->
+	<div id="publications">
+		<div class="item-publication" *ngFor="let publication of publications">
+			<!-- Declaramos un panel -->
+			<div class="panel panel-warning">
+				<div class="panel-body">
+					
+					<!-- IMAGEN DE USUARIO -->
+					<div class="image-user pull-left">
+						<a href="#">
+							<!-- MOSTRAMOS LA IMAGEN SOLAMENTE SI EXISTE -->
+							<img src="{{url+'get-image-user/'+ publication.user.image}}" class="img-responsive center-block" *ngIf="publication.user.image" alt="">
+							<!-- SI NO EXISTE MOSTRAMOS UNA POR DEFECTO -->
+							<img src="assets/user.png" class="img-responsive center-block" *ngIf="!publication.user.image" alt="">
+						</a>
+					</div>
+
+					<div class="">
+						<a [routerLink]="['/perfil/',publication.user._id]" class="name-surname">
+							{{publication.user.name+' '+publication.user.surname}}
+						</a>
+						&nbsp; | &nbsp;
+						<!-- FECHA (utilizamos pipes de moment) -->
+						<span class="date">
+							{{ (publication.created_at | amFromUnix) |amLocale:'es'|amTimeAgo}}
+						</span>
+					</div>
+
+
+
+					<h4 class="publication-text pull-left">
+						{{publication.text}}
+					</h4>
+
+					<!-- BOTON ELIMINAR PUBLICACION -->
+					<div class="pull-right" *ngIf="publication.user._id==identity._id">
+
+						<!-- Button HTML (to Trigger Modal) -->
+						<a href="#myModal" role="button" class="btn btn-large btn-danger" data-toggle="modal" *ngIf="publication.user._id==identity._id">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+						 
+						<!-- Modal HTML -->
+						<div id="myModal" class="modal fade">
+						    <div class="modal-dialog">
+						        <div class="modal-content">
+						            <div class="modal-header">
+						                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						                <h4 class="modal-title">Eliminar Publicación</h4>
+						            </div>
+						            <div class="modal-body">
+						                <p>Realmente desea eliminar la publicación?</p>
+						                <p class="text-primary"><small>Los datos no podrán recuperarse</small></p>
+						            </div>
+						            <div class="modal-footer">
+						                <button type="button" class="btn btn-info" data-dismiss="modal">Volver</button>
+						                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deletePublication(publication._id)">Eliminar</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+					</div>
+
+
+					<!-- IMAGEN DE PUBLICACION -->
+					<div class="pull-right" *ngIf="publication.file!='null'">
+						
+
+						<!-- BOTON MOSTRAR IMAGEN -->
+						<button class="btn btn-warning" (click)="showThisImage(publication._id)" *ngIf="showImage!=publication._id">
+							<span class="glyphicon glyphicon-picture"></span>
+						</button>
+
+						<!-- BOTON OCULTAR IMAGEN -->
+						<!-- Le pasamos un 0 para ocultar la imagen -->
+						<button class="btn btn-danger" (click)="showThisImage('0')" *ngIf="showImage==publication._id">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						&nbsp;
+
+					</div>
+					<div class="col-md-12" *ngIf="publication.file && showImage==publication._id">
+						<img src="{{url+'get-image-pub/'+publication.file}}" class="col-md-12" alt=""/>
+					</div>
+				</div>
+
+				
+			</div>
+		</div>
+
+		<!-- VER MAS -->
+		<div class="col-lg-12 text-center" *ngIf="publications && publications.length">
+			<p>
+				<!-- Se va a mostrar si hay mas publicaciones -->
+				<button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+					Ver más publicaciones
+				</button>
+
+				<button class="btn btn-danger" *ngIf="noMore">
+					No hay más publicaciones
+				</button>
+			</p>
+		</div>
+	</div>
+
+</div>
+
+<!-- SIDEBAR -->
+<!-- Tenemos disponible el evento sended ACA EN EL COMPONENTE PADRE para capturarlo y refrescar las publicaciones -->
+<sidebar (sended)="refreshPublications($event)"></sidebar>
+
+<!-- Por si acaso hacemos un clearfix -->
+<div class="clearfix"></div>

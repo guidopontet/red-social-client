@@ -1,20 +1,109 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!-- Barra de navegacion -->
+<div class="navigation col-md-12">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
 
+      <!-- Header -->
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">{{title}}</a>
+      </div>
+
+      <!-- Elementos si esta logueado -->
+      <ul class="nav navbar-nav" *ngIf="identity">
+        <li>
+          <a [routerLink]="['/home']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-home"></span>
+             Inicio
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/timeline']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-th-list"></span>
+             Timeline
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/gente']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-user"></span>
+             Gente
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/mensajes']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-envelope"></span>
+             Mensajes
+          </a>
+        </li>
+
+      </ul>
+
+
+      <!-- Elementos si no está logueado -->
+      <ul class="nav navbar navbar-nav navbar-right" *ngIf="!identity">
+        
+        <li>
+          <!-- Usamos un routerLink para redirigir al Login -->
+          <!-- Y si el link está activo que lo marque -->
+          <a [routerLink]="['/login']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-log-in"></span>
+             Login
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/registro']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-user"></span>
+             Registro
+          </a>
+        </li>
+      </ul>
+
+
+      <!-- Menu de usuario -->
+      <ul class="nav navbar navbar-nav navbar-right" *ngIf="identity">
+        <li class="avatar">
+          <!-- Cargar imagen de usuario -->
+          <img src="{{url + 'get-image-user/' +identity.image}}" class="img-responsive center-block"  *ngIf="identity && identity.image">
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {{identity.name}} <span class="caret"></span>
+          </a>
+
+          <!-- Menu -->
+          <ul class="dropdown-menu">
+            <li>
+              <a [routerLink]="['/perfil/',identity._id]">
+                <span class="glyphicon glyphicon-user"></span>
+                 Mi Perfil
+              </a>
+            </li>
+
+             <li>
+              <a [routerLink]="['/mis-datos']">
+                <span class="glyphicon glyphicon-cog"></span>
+                 Mis Datos
+              </a>
+            </li>
+
+             <li>
+              <!-- Los eventos van con parentesis siempre -->
+              <a class="pointer" (click)="logout()">
+                <span class="glyphicon glyphicon-log-out"></span>
+                 Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+</div>
+
+<!-- Dependiendo de la ruta, se va a cargar un componente u otro (Por ejemplo Login o Registro, dentro de esta etiqueta) -->
+<router-outlet></router-outlet>
